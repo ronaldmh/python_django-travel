@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Viaje</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quote3.css' %}">
+    <style>       
+    </style>
+    <script src="{% static 'js/quote3.js' %}"></script>
+</head>
+<body>
+    <div class="card">
+        <img src="{% static 'images/general/ventana1.jpg' %}" alt="Fondo" class="background-image">
+        <img src="{% static 'images/general/logo.jpg' %}" alt="Logo" class="logo">
+        
+        <div class="content">
+            <h2>Vuelos</h2>
+        </div>
+
+        <div class="additional-content">
+
+            <div class="content-container-1">
+                <div class="important-date">
+                    <h2>Ida</h2>
+                    <span id="formatted-dates">19 JUL</span>
+                </div>
+                <div class="origin-destination">
+                    <div class="origin">                    
+                        <p>Origen</p>
+                        <p>{{ origin }}</p>
+                        <p>Sale: {{ dep_time }}</p>
+                    </div>
+                    <div class="destination">                    
+                        <p>Destino</p>
+                        <p>{{ destination }}</p>
+                        <p>Llega: {{ arr_time }}</p>
+                    </div>
+                </div>
+                <div class="airline">
+                    <p>AEROLÍNEA:</p>
+                    <p>{{ airline_departure }}</p>
+                </div>
+            </div>
+            
+            
+
+            <div class="content-container-2">
+                <div class="important-date">
+                    <h2>Regreso</h2>
+                    <span id="formatted-dates-end">Fecha de regreso</span>
+                </div>
+                <div class="origin-destination">
+                    <div class="origin">                    
+                        <p>Origen</p>
+                        <p>{{ origin }}</p>
+                        <p>Sale: {{ dep_time_return }}</p>
+                    </div>
+                    <div class="destination">                    
+                        <p>Destino</p>
+                        <p>{{ destination }}</p>
+                        <p>Llega: {{ arr_time_return }}</p>
+                    </div>
+                </div>
+                <div class="airline">
+                    <p>AEROLÍNEA:</p>
+                    <p>{{ airline_return }}</p>
+                </div>
+            </div>
+            
+            <div class="terms">                    
+                <h5>TERMINOS Y CONDICIONES</h5>
+                <p>Tu tarifa Base incluye:</p>
+                <p>Los boletos de avión no son reembolsables. Una vez emitido el boleto no puede ser asignado a una persona o aerolínea diferente. Los cambios en los boletos pueden ocasionar cargos extra, están sujetos a disponibilidad, clase tarifaria y políticas de cada aerolínea al momento de solicitar el cambio. Para vuelos nacionales presentarse 2 horas antes de la salida del vuelo. Para vuelos internacionales presentarse 3 horas antes de la salida del vuelo.</p>
+                                
+                <p>Tarifa Base:</p>
+                <ul>
+                    <li>Equipaje Documentado: Sujeto a tarifas adicionales</li>
+                    <li>Equipaje en Cabina: Bolso (debe caber debajo del asiento frente a ti)</li>
+                    <li>Información extra: Silla aleatoria</li>
+                    <li>Equipaje Extra: Sujeto a tarifas adicionales</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <form>
+                    <button type="submit" onclick="window.print()">Imprimir</button>
+                    <!-- Enlace a la vista quote2_view sin pasar contexto -->
+                    <button type="button" onclick="window.location.href='{% url 'quote4' %}'">Siguiente</button>
+                </form>               
+            </div>
+        </div>
+    </div>
+</body>
+</html>

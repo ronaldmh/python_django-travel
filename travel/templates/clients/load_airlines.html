@@ -1,0 +1,14 @@
+<!-- load_airlines.html -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="csv_file" accept=".csv">
+    <button type="submit">Cargar archivo CSV</button>
+</form>
+
+{% if success_message %}
+    <p>{{ success_message }}</p>
+{% endif %}
+
+{% if error_message %}
+    <p>Error: {{ error_message }}</p>
+{% endif %}

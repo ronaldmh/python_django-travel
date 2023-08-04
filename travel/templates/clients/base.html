@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;           
+      }
+      .container {
+        margin-bottom: 100px; /* margen inferior igual a la altura del footer */
+      }
+
+      .navbar-brand {
+        margin-left: 15px;
+      }
+
+      .links {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+      }  
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">      
+      <img src="{% static 'images/general/logo.jpg' %}" alt="Viajemos Travel logo" class="logo" style="max-width: 70px; width: 100%; height: auto; border-radius: 5%;">
+      <a class="navbar-brand" href="#" style="margin-left: 10px;">Viajemos Travel</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'client_list' %}">Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'services_view' %}">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_user' %}">Cerrar sesión</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="">Inicio sesión</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>    
+      
+    <div class="container">
+      {% block content %}
+      {% endblock %}      
+      
+    </div>
+
+    <div class="footer">      
+      <p>&copy; 2023 Viajemos Travel. Todos los derechos reservados.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Viaje</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quote2.css' %}">
+    <style>
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtén la fecha sin formatear de tus variables 'start_date' y 'end_date'
+            var startDate = new Date('{{ start_date }}');
+            var endDate = new Date('{{ end_date }}');
+    
+            // Ajusta las fechas al formato UTC para que no se vean afectadas por la zona horaria del usuario
+            var formattedStartDate = formatDate(startDate);
+            var formattedEndDate = formatDate(endDate);
+    
+            // Muestra las fechas formateadas en el elemento con id 'formatted-dates'
+            document.getElementById('formatted-dates').textContent = formattedStartDate + " - " + formattedEndDate;
+        });
+    
+        function formatDate(date) {
+            // Arreglo de nombres de meses abreviados
+            var monthNames = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+    
+            // Obtiene el día y el mes del objeto Date y los formatea
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = monthNames[date.getMonth()];
+    
+            // Devuelve la fecha formateada en el estilo "DD MMM"
+            return day + " " + month;
+        }
+    </script>
+    
+    
+
+</head>
+<body>
+    <div class="card">
+        <img src="{% static 'images/general/viajemos.jpg' %}" alt="Fondo" class="background-image">
+        <img src="{% static 'images/general/logo.jpg' %}" alt="Logo" class="logo">
+        
+        <div class="content">
+            <h2>Tu Viaje</h2>
+        </div>
+
+        <div class="additional-content">
+                        
+            <div class="origin-destination">
+                <div class="origin">
+                    <h2>ORIGEN:</h2>
+                    <p>{{ origin }}</p>
+                </div>
+            
+                <div class="destination">
+                    <h2>DESTINO:</h2>
+                    <p>{{ destination }}</p>
+                </div>
+            </div>
+                       
+
+            <div class="passenger-info">
+                <p>PASAJEROS:</p>
+                <h4>{{ num_adults }} Adultos - {{ num_children }} Niño(s)</h4>
+            </div>
+
+            <div class="important-date">
+                <p>FECHAS DE VIAJE:</p>
+                <span id="formatted-dates"></span>
+            </div>
+            <div class="buttons">
+                <form>
+                    <button type="submit" onclick="window.print()">Imprimir</button>
+                    <!-- Enlace a la vista quote2_view sin pasar contexto -->
+                    <button type="button" onclick="window.location.href='{% url 'quote3' %}'">Siguiente</button>
+                </form>               
+            </div>           
+        </div>
+        
+    </div>
+</body>
+</html>

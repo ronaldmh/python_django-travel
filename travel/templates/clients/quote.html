@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tarjeta con imagen de fondo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quote.css' %}">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="{% static 'images/general/fondo.jpg' %}" alt="Fondo" class="background-image">
+        <img src="{% static 'images/general/logo.jpg' %}" alt="Logo" class="logo">
+        
+        <div class="content">
+            <h2>COTIZACIÓN</h2>
+            <p>Para tu viaje!</p>
+        </div>
+
+        <div class="additional-content">
+            <h1>VIAJEMOS TRAVEL</h1>
+            <p>Cotización vigente al día de hoy, precios sujetos a cambios sin previo aviso por parte de aerolíneas, tasas de cambio y otros proveedores.<br>Amamos viajar !</p>
+            
+            <div class="buttons">
+                <form>
+                    <button type="submit" onclick="window.print()">Imprimir</button>
+                    <!-- Enlace a la vista quote2_view sin pasar contexto -->
+                    <button type="button" onclick="window.location.href='{% url 'quote2' %}'">Siguiente</button>
+                </form>               
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

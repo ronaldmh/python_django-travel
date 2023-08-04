@@ -1,0 +1,135 @@
+{% extends 'clients/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h2>Nueva cotización</h2><br>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Viaje</h5>
+
+        <form id="quote-form" method="POST" action="{% url 'quote' %}" onsubmit="return validateForm()">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="origin">Origen</label>
+            <select name="origin" class="form-control" id="origin">
+              <option value="">Seleccione un origen</option>
+              {% for city in cities %}
+              <option value="{{ city.name }}">{{ city.name }}, {{ city.country }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="destination">Destino</label>
+            <select name="destination" class="form-control" id="destination">
+              <option value="">Seleccione un destino</option>
+              {% for city in cities %}
+              <option value="{{ city.name }}">{{ city.name }}, {{ city.country }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="start_date">Fecha ida</label>
+            <input type="date" name="start_date" class="form-control" id="start_date" value="{{start_date}}">
+          </div>
+
+          <div class="form-group">
+            <label for="end_date">Fecha regreso</label>
+            <input type="date" name="end_date" class="form-control" id="end_date">
+          </div>
+
+          <div class="form-group">
+            <label for="num_adults">Adultos</label>
+            <input type="number" name="num_adults" class="form-control" id="num_adults" min="1" value="1"> <!-- Establecer el valor por defecto a "1" -->
+          </div>
+        
+          <div class="form-group">
+            <label for="num_children">Niños</label>
+            <input type="number" name="num_children" class="form-control" id="num_children" min="0" value="0"> <!-- Establecer el valor por defecto a "0" -->
+          </div>
+          
+          <h2>Ida</h2><br>
+          
+          <div class="form-group">
+            <label for="airline">Aerolínea</label>
+            <select name="airline_departure" class="form-control" id="airline">
+              <option value="">Seleccione una aerolínea</option>
+              {% for airline in airlines %}
+              <option value="{{ airline.name }}">{{ airline.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dep_time">Hora salida</label>
+            <input type="time" name="dep_time" class="form-control" id="dep_time">
+          </div>
+
+          <div class="form-group">
+            <label for="arr_time">Hora llegada</label>
+            <input type="time" name="arr_time" class="form-control" id="arr_time">
+          </div>
+
+          
+          <h2>Regreso</h2><br>
+
+          <div class="form-group">
+            <label for="airline">Aerolínea</label>
+            <select name="airline_return" class="form-control" id="airline_return">
+              <option value="">Seleccione aereolínea</option>
+              {% for airline in airlines %}
+              <option value="{{ airline.name }}">{{ airline.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dep_time_return">Hora salida</label>
+            <input type="time" name="dep_time_return" class="form-control" id="dep_time_return">
+          </div>
+
+          <div class="form-group">
+            <label for="arr_time_return">Hora llegada</label>
+            <input type="time" name="arr_time_return" class="form-control" id="arr_time_return">
+          </div>
+
+          
+          <h2>Hotel</h2><br>
+
+          <div class="form-group">
+            <label for="hotel">Hospedaje</label>
+            <select name="hotel" class="form-control" id="hotel">                
+                {% for hotel in hotels %}
+                <option value="{{ hotel.id }}">{{ hotel.name }}, {{ hotel.city }}</option> <!-- Agregar el atributo "value" con el ID del hotel -->
+                {% endfor %}
+            </select>
+          </div>
+
+          <h2>Tu viaje</h2><br>
+
+          <div class="form-group">
+            <label for="trip_cost">Valor viaje</label>
+            <input type="number" name="trip_cost" class="form-control" id="trip_cost">
+          </div>
+
+          <div class="form-group">
+            <label for="total_value">Precio total en oferta</label>
+            <input type="number" name="total_value" class="form-control" id="total_value" value="total_value">
+          </div>        
+
+          <!-- Campo oculto para almacenar el JSON de ciudades y hoteles -->
+          
+          <input type="hidden" id="city-hotels-data" value="{{ city_hotels_json }}">
+
+
+          <button class="btn btn-primary" type="submit">Generar Cotización</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'js/create_quote.js' %}"></script>
+{% endblock %}

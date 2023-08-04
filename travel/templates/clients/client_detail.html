@@ -1,0 +1,58 @@
+{% extends 'clients/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Información del Cliente</h2><br>
+    
+  <br><br>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Name:</th>
+          <td>{{ client.first_name }}</td>
+        </tr>
+        <tr>
+          <th>Last Name:</th>
+          <td>{{ client.last_name }}</td>
+        </tr>
+        <tr>
+          <th>Phone:</th>
+          <td>{{ client.phone_number }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h2>Historial de viajes</h2><br>
+    <table class="table">
+      <thead>
+        <tr>
+            <th>Id.</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Destino</th>
+            <th>Costo</th>
+            <th>Reserva</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+          <tr>
+            <td>{{ service.id_service }}
+            <td>{{ service.date }}</td>
+            <td>{{ service.description }}</td>
+            <td>{{ service.services }}</td>
+            <td>{{ service.cost }}</td>
+            <td>{{ service.status }}</td>
+            <td><a href="{% url 'update_service' service.id_service %}">Update</a></td>
+            <td><a href="{% url 'view_client_service' service.id_service %}">View</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">No hay servicios</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="javascript:history.go(-1)">Volver</a> 
+  </div>
+{% endblock %}

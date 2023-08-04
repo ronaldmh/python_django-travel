@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Viaje</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quote5.css' %}">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <img src="{% static 'images/general/fondo2.jpg' %}" alt="Fondo" class="background-image">
+        <div class="Trip-title">
+            <h1>Tu Viaje</h1>
+            <div>                
+                <img src="{% static 'images/general/logo.jpg' %}" alt="Logo" class="logo">
+            </div>            
+        </div>
+
+        <div class="Trip-value">
+            <h1>Valor Viaje:</h1>
+            <h1><span class="tachado">$ {{ trip_cost }} COP</span></h1>
+        </div>
+
+        <div class="Total-cost">
+            <h1>Precio total en oferta:</h1>
+            <p>$ {{ total_value }} COP</p>
+        </div>
+
+        <div class="cards">
+            <div><h2 style="color: #fff;;">Incluye:</h2></div>
+            <div class="include">
+                <div class="card">
+                    <div class="section">
+                        <h2>Vuelos</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Tiquetes ida y regreso en aerolínea sugerida* validar políticas de equipaje y tarifa.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section">
+                        <h2>Alojamiento</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Información sobre el alojamiento durante el viaje.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section">
+                        <h2>Traslados</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Información sobre los traslados durante el viaje.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section">
+                        <h2>Tarjeta de Asistencia</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Viaja protegido de cualquier imprevisto médico con coberturas básicas incluidas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="non-include">
+                <div class="card">
+                    <div class="section no-incluye">
+                        <h2>No incluye</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Gastos no especificados en esta cotización. Impuestos de muelles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cost-person">
+            <h2>VALOR VIAJE X PERSONA : $ {{ cost_by_person }} COP</h2>
+            <p>Plan Separe: Aparta tu viaje hoy con solo $1'000.000 COP y el
+                saldo pagalo antes del 20 de Enero 2023 sin interes*
+                Pregunta al asesor por los términos y condiciones
+            </p>
+        </div><div class="buttons">
+            <form>
+                <button type="submit" onclick="window.print()">Imprimir</button>
+                <button type="button" onclick="window.location.href='{% url 'home' %}'">Finalizar</button>
+            </form>
+        </div>        
+    </div>
+</body>
+</html>

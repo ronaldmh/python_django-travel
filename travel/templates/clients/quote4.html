@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Viaje</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quote4.css' %}">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="{% static 'images/general/hotel.jpg' %}" alt="Fondo" class="background-image">
+        <img src="{% static 'images/general/logo.jpg' %}" alt="Logo" class="logo">
+        
+        <div class="content">
+            <h2>Hospedaje</h2>
+        </div>
+
+        <div class="name-hotel">
+            <h1>{{hotel.name}}</h1>
+        </div>
+
+        <div class="additional-content">
+            <div class="image-column">
+                <img src="{% static hotel_images.0 %}" alt="Hotel Image">
+                <div class="image-caption">
+                    <h4>Ubicación</h4>
+                    <p>{{hotel.location}}</p>
+                </div>
+            </div>
+            <div class="image-column">
+                <img src="{% static hotel_images.1 %}" alt="Hotel Image">
+                <div class="image-caption">
+                    <h4>Habitación</h4>
+                    <p>Habitaciones doble, Acceso a Wifi, Balcón</p>
+                </div>
+            </div>
+            <div class="image-column">
+                <img src="{% static hotel_images.2 %}" alt="Hotel Image">
+                <div class="image-caption">
+                    <h4>Categoría</h4>
+                    <p>{{hotel.category}}</p>
+                </div>
+            </div>
+            <div class="image-column">
+                <img src="{% static hotel_images.3 %}" alt="Hotel Image">
+                <div class="image-caption">
+                    <h4>Servicios</h4>
+                    <p>{{hotel.services_available}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <form>
+                <button type="submit" onclick="window.print()">Imprimir</button>
+                <button type="button" onclick="window.location.href='{% url 'quote5' %}'">Siguiente</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

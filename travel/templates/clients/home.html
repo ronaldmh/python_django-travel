@@ -1,0 +1,26 @@
+{% extends 'clients/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1>Bienvenido</h1>
+      <img src="{% static 'images/general/viajemosTravel.jpg' %}" alt="v travel" style="max-width: 300px; width: 90%; height: auto;">
+      <p class="lead">Your go-to solution for managing your clients and their travels.</p>
+      <hr>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>CLIENTES</h3>
+          <p>Agregar,editar o ver clientes</p>
+          <a href="{% url 'client_list' %}" class="btn btn-lg btn-primary">Clientes</a>
+        </div>
+        <div class="col-sm-6">
+          <h3>COTIZACIONES</h3>
+          <p>Agregar, editar, o ver cotizaciones.</p>
+          <a href="{% url 'create_quote' %}" class="btn btn-lg btn-primary">Cotizaciones</a>
+        </div>
+      </div>
+    </div>
+      </div>
+{% endblock %}

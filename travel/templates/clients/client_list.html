@@ -1,0 +1,67 @@
+{% extends 'clients/base.html' %}
+
+{% block content %}
+  <div class="container">    
+    <h2>Lista de clientes</h2><br>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Búsqueda</h5>
+
+        <form id="search-form" method="POST" action="{% url 'client_list' %}" class="form-inline my-2 my-lg-0">
+          {% csrf_token %}
+          <div class="form-group">
+            <input type="text" name="firstName" class="form-control mr-sm-2" placeholder="Nombre" id = 'id_firstName'>
+          </div>
+          <div class="form-group">
+            <input type="text" name="lastName" class="form-control mr-sm-2" placeholder="Apellido" id = 'id_lastName'>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" class="form-control mr-sm-2" placeholder="Email" id = 'id_email'>
+          </div>
+          <div class="form-group">
+            <input type="text" name="phone" class="form-control mr-sm-2" placeholder="Teléfono" id = 'id_phone'>
+          </div>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div><br>
+    
+    <a href="{% url 'register' %}" class="btn btn-primary">Registrar nuevo cliente</a><br><br>
+    
+    <table id="client-table" class="table table-striped">
+      
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Número celular</th>
+          <th>Email</th>          
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clients %}
+        <tr>
+          <td>{{ client.first_name }}</td>
+          <td>{{ client.last_name }}</td>
+          <td>{{ client.phone_number }}</td>
+          <td>{{ client.email }}</td>          
+          <td>
+            <a href="{% url 'client_detail' client.id_client %}" class="btn btn-sm btn-primary">Details</a>
+                      
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">Aún no hay clientes registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="javascript:history.back()" class="btn btn-secondary">Regresar</a>
+    <a href="#" class="btn btn-secondary" onclick="window.scrollTo(0,0)">Ir arriba</a>
+    
+  </div>
+
+{% endblock %}
+

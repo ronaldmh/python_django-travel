@@ -1,0 +1,143 @@
+<!-- cargar_csv.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cargar Hoteles y Aerolíneas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button[type="submit"] {
+            background-color: #0b80ff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button[type="submit"]:hover {
+            background-color: #005aff;
+        }
+
+        .form-container input[type="file"] {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Cargar Hotel</h2>
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="name">Nombre del hotel:</label>
+                <input type="text" name="name" required>
+                <br>
+                <label for="location">Ubicación:</label>
+                <input type="text" name="location" required>
+                <br>
+                <label for="category">Categoría:</label>
+                <input type="text" name="category" required>
+                <br>
+                <label for="rooms">Número de habitaciones:</label>
+                <input type="number" name="rooms" required>
+                <br>
+                <label for="services_available">Servicios disponibles:</label>
+                <textarea name="services_available" required></textarea>
+                <br>
+                <label for="city">Ciudad:</label>
+                <select name="city" required>
+                    {% for city in cities %}
+                        <option value="{{ city.id }}">{{ city.name }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for="photo1">Foto 1:</label>
+                <input type="file" name="photo1" accept="image/*">
+                <br>
+                <label for="photo2">Foto 2:</label>
+                <input type="file" name="photo2" accept="image/*">
+                <br>
+                <label for="photo3">Foto 3:</label>
+                <input type="file" name="photo3" accept="image/*">
+                <br>
+                <label for="photo4">Foto 4:</label>
+                <input type="file" name="photo4" accept="image/*">
+                <br>
+                <label for="photo5">Foto 5:</label>
+                <input type="file" name="photo5" accept="image/*">
+                <br>
+                <button type="submit">Guardar Hotel</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h2>Cargar Aeropuertos</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="csv_file">Cargar archivo CSV :</label>
+                <input type="file" name="csv_file" accept=".csv">
+                <br>
+                <button type="submit">Cargar archivo CSV</button>
+            </form>
+
+            {% if messages %}
+                <div>
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+
+        </div>
+    </div>
+</body>
+</html>
