@@ -14,8 +14,6 @@ from django.core import serializers
 
 from django.contrib import messages
 
-
-
 def index(request):
     return render(request, 'clients/index.html')
 
