@@ -29,10 +29,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')  # Reemplaza 'home' con la URL a la que quieres redirigir después del inicio de sesión exitoso.
+            return redirect('home')  
         else:
             messages.error(request, 'Credenciales inválidas')
-    return render(request, 'clients/index.html')  # Reemplaza 'login.html' con la plantilla de inicio de sesión que quieras utilizar.
+    return render(request, 'clients/index.html')  
 
 
 def logout_view(request):
@@ -40,9 +40,7 @@ def logout_view(request):
     return redirect('index')
 
 def client_list(request):
-    clients = Client.objects.all()
-    #cars = Car.objects.all()
-    #form = SearchClientForm()
+    clients = Client.objects.all()    
     return render(request, 'clients/client_list.html', {'clients': clients})
 
 
@@ -61,18 +59,18 @@ def create_client(request):
             existing_client = Client.objects.filter(query).first()
             
             if existing_client:
-                # Client already exists, show error message
+                
                 form.add_error('email', 'Client with this email/phone already exists.')
             else:
-                # Client doesn't exist, save client to the database
+                
                 client = form.save()
                                 
-                # Redirect to home page
+                
                 return render(request, 'clients/home.html', {'form': form})
     else:
         form = ClientForm()
     
-    # Render registration page with form
+
     return render(request, 'clients/register.html', {'form': form})
 
 
@@ -103,13 +101,13 @@ def create_service(request, id_client):
         form = NewServiceForm(request.POST)
         
         if form.is_valid():
-            # Crear un nuevo objeto Services utilizando los datos del formulario y el ID del cliente
+            
             service = form.save(commit=False)
             service.id_car = car
             service.id_client = client
             service.save()
             
-            # Mostrar un mensaje de confirmación al usuario
+            
             messages.success(request, 'Service created successfully.')
             
             return redirect('client_detail', id_client=id_client)
@@ -147,39 +145,39 @@ def create_quote(request):
         
         hotel_id = request.POST.get('hotel')
         
-        # Obtén la información del hotel solo si se ha seleccionado uno
+        
         if hotel_id:
-            # Buscar el hotel en la base de datos o devolver None si no existe
+            
             hotel = get_object_or_404(Hotel, pk=hotel_id)
 
-            # Obtén la ruta de la carpeta de imágenes del hotel
+            
             hotel_images_folder = f'static/images/hotel/{hotel_id}'
 
             try:
-                # Intenta obtener la lista de rutas completas de las imágenes del hotel
+                
                 hotel_images = [f'{hotel_images_folder}/{image_filename}' for image_filename in os.listdir(hotel_images_folder)]
             except OSError as e:
-                # Captura el error en caso de que ocurra
+                
                 print(f"Error al obtener las imágenes del hotel: {e}")
                 hotel_images = []
 
-            # Remover la palabra "static" de las rutas de imágenes
+           
             hotel_images = [image_path.split('static/')[1] for image_path in hotel_images]
 
-            # Serializar el objeto Hotel a JSON
+            
             hotel_json = serializers.serialize('json', [hotel])
 
-            # Convertir el JSON a un diccionario
+            
             hotel_data = json.loads(hotel_json)
             hotel_dict = hotel_data[0]['fields']
         else:
-            # Si no se selecciona un hotel, establecer hotel y hotel_images como None
+           
             hotel = None
             hotel_dict = {}
             hotel_images = []
 
         
-        # Diccionario de contexto
+        
         context = {
             'origin': origin,
             'destination': destination,
@@ -202,13 +200,13 @@ def create_quote(request):
         
         print(cost_by_person)
 
-        # Guardar el diccionario de contexto en la sesión
+        
         request.session['quote_context'] = context
 
-        # Renderizar la plantilla 'quote.html' con el mismo diccionario de contexto
+        
         return render(request, 'clients/quote.html', context)
     else:
-        # Obtener datos fijos de la base de datos: ciudades, hoteles, vuelos y aerolíneas
+        
         cities = City.objects.all()
         airlines = Airlines.objects.all()
         city_hotels = {}
@@ -230,7 +228,7 @@ def create_quote(request):
    
 
 def quote_view(request):
-    # Obtén el diccionario de contexto desde la vista original
+    
     context = request.session.get('quote_context', {})
 
     return render(request, 'clients/quote.html', context)
@@ -238,7 +236,7 @@ def quote_view(request):
     
 
 def quote2_view(request):
-    # Obtén el diccionario de contexto desde la vista original
+    
     context = request.session.get('quote_context', {})
 
     return render(request, 'clients/quote2.html', context)
@@ -246,7 +244,7 @@ def quote2_view(request):
 
 
 def quote3_view(request):
-    # Obtén el diccionario de contexto desde la vista original
+    
     context = request.session.get('quote_context', {})
 
     return render(request, 'clients/quote3.html', context)
@@ -254,14 +252,14 @@ def quote3_view(request):
 
 
 def quote4_view(request):
-    # Obtén el diccionario de contexto desde la vista original
+    
     context = request.session.get('quote_context', {})
 
     return render(request, 'clients/quote4.html', context)
 
 
 def quote5_view(request):
-    # Obtén el diccionario de contexto desde la vista original
+    
     context = request.session.get('quote_context', {})
 
     return render(request, 'clients/quote5.html', context)
@@ -275,7 +273,7 @@ def client_detail(request, id_client):
 
 
 
-# VISTAS DE CARGA DE DATOS
+# Load data views
 
 def load_csv(request):
     if request.method == 'POST' and request.FILES.get('csv_file'):
@@ -313,17 +311,17 @@ def load_cities(request):
         csv_file = request.FILES['csv_file']
 
         try:
-            df = pd.read_csv(csv_file, encoding='utf-8', header=None)  # Abre el archivo en modo de texto y omite el encabezado
+            df = pd.read_csv(csv_file, encoding='utf-8', header=None)  
 
-            # Iterar sobre el DataFrame y crear objetos City a partir de los datos del CSV
+            
             for _, row in df.iterrows():
                 city_name = row[0]
                 country_name = row[1]
 
-                # Verificar si la ciudad ya existe en la base de datos
+                
                 city, created = City.objects.get_or_create(name=city_name, country=country_name)
 
-            # Mostrar mensaje de éxito
+            
             success_message = "Ciudades y países cargados exitosamente."
             return render(request, 'clients/load_cities.html', {'success_message': success_message})
         
@@ -345,16 +343,16 @@ def load_airlines(request):
         csv_file = request.FILES['csv_file']
 
         try:
-            df = pd.read_csv(csv_file, encoding='utf-8', header=None)  # Omitir el encabezado del archivo CSV
+            df = pd.read_csv(csv_file, encoding='utf-8', header=None)  
 
-            # Iterar sobre el DataFrame y crear objetos Airline a partir de los datos del CSV
+            
             for _, row in df.iterrows():
                 airline_name = row[0]
 
-                # Verificar si la aerolínea ya existe en la base de datos
+                
                 airline, created = Airlines.objects.get_or_create(name=airline_name)
 
-            # Mostrar mensaje de éxito
+            
             success_message = "Aerolíneas cargadas exitosamente."
             return render(request, 'clients/load_airlines.html', {'success_message': success_message})
         
@@ -377,29 +375,29 @@ def load_hotels(request):
         try:
             df = pd.read_csv(csv_file, encoding='utf-8')
 
-            # Iterar sobre el DataFrame y crear objetos Hotel a partir de los datos del CSV
+            
             for _, row in df.iterrows():
                 hotel_name = row['name']
                 hotel_location = row['location']
                 hotel_category = row['category']
                 hotel_rooms = int(row['rooms'])
                 hotel_services = row['services_available']
-                hotel_city_name = row['city']  # Obtener el nombre de la ciudad del CSV
+                hotel_city_name = row['city']  
 
-                # Verificar si la ciudad ya existe en la base de datos
-                city, created = City.objects.get_or_create(name=hotel_city_name, country='')  # Puedes asignar un país si está disponible en el CSV
+                
+                city, created = City.objects.get_or_create(name=hotel_city_name, country='')  
 
-                # Crear el objeto Hotel y asignar la ciudad correspondiente
+                
                 hotel, hotel_created = Hotel.objects.get_or_create(
                     name=hotel_name,
                     location=hotel_location,
                     category=hotel_category,
                     rooms=hotel_rooms,
                     services_available=hotel_services,
-                    city=city  # Asignar el objeto City al campo city de Hotel
+                    city=city  
                 )
 
-            # Mostrar mensaje de éxito
+            
             success_message = "Hoteles cargados exitosamente."
             return render(request, 'clients/load_hotels.html', {'success_message': success_message})
         

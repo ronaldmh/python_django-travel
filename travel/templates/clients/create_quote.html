@@ -44,12 +44,12 @@
 
           <div class="form-group">
             <label for="num_adults">Adultos</label>
-            <input type="number" name="num_adults" class="form-control" id="num_adults" min="1" value="1"> <!-- Establecer el valor por defecto a "1" -->
+            <input type="number" name="num_adults" class="form-control" id="num_adults" min="1" value="1"> 
           </div>
         
           <div class="form-group">
             <label for="num_children">Niños</label>
-            <input type="number" name="num_children" class="form-control" id="num_children" min="0" value="0"> <!-- Establecer el valor por defecto a "0" -->
+            <input type="number" name="num_children" class="form-control" id="num_children" min="0" value="0"> 
           </div>
           
           <h2>Ida</h2><br>
@@ -104,7 +104,7 @@
             <label for="hotel">Hospedaje</label>
             <select name="hotel" class="form-control" id="hotel">                
                 {% for hotel in hotels %}
-                <option value="{{ hotel.id }}">{{ hotel.name }}, {{ hotel.city }}</option> <!-- Agregar el atributo "value" con el ID del hotel -->
+                <option value="{{ hotel.id }}">{{ hotel.name }}, {{ hotel.city }}</option> 
                 {% endfor %}
             </select>
           </div>
@@ -119,9 +119,7 @@
           <div class="form-group">
             <label for="total_value">Precio total en oferta</label>
             <input type="number" name="total_value" class="form-control" id="total_value" value="total_value">
-          </div>        
-
-          <!-- Campo oculto para almacenar el JSON de ciudades y hoteles -->
+          </div> 
           
           <input type="hidden" id="city-hotels-data" value="{{ city_hotels_json }}">
 
